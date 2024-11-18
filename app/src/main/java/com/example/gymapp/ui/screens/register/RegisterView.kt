@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.gymapp.ui.screens.login.LoginStatus
 import kotlinx.coroutines.launch
+import android.util.Log
 
 @Composable
 fun RegisterScreen(viewModel: RegisterViewModel, navController: NavHostController) {

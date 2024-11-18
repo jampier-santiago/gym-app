@@ -2,6 +2,7 @@ package com.example.gymapp.ui.screens.login
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,11 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -146,8 +149,14 @@ fun ForgotPassword(modifier: Modifier, navController: NavHostController) {
 
 @Composable
 fun PasswordField(password: String, onTextFieldChanged: (String) -> Unit) {
+    var showError by remember { mutableStateOf(false) }
+
     TextField(
-        value = password, onValueChange = { onTextFieldChanged(it) },
+        value = password,
+        onValueChange = {
+            onTextFieldChanged(it)
+            showError = it.length < 6 && it.isNotEmpty()
+        },
         placeholder = { Text(text = "Contraseña") },
         modifier = Modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -160,12 +169,27 @@ fun PasswordField(password: String, onTextFieldChanged: (String) -> Unit) {
             unfocusedContainerColor = Color(0xFFFAFAFA),
         )
     )
+
+    if(showError) {
+        Text(
+            text = "Contraseña invalida",
+            color = Color.Red,
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
 }
 
 @Composable
 fun EmailField(email: String, onTextFieldChanged: (String) -> Unit) {
+    val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
+    var showError by remember { mutableStateOf(false) }
+
     TextField(
-        value = email, onValueChange = { onTextFieldChanged(it) },
+        value = email,
+        onValueChange = {
+            onTextFieldChanged(it)
+            showError = !emailPattern.matches(it) && it.isNotEmpty()
+        },
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text(text = "Email") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -178,13 +202,21 @@ fun EmailField(email: String, onTextFieldChanged: (String) -> Unit) {
             unfocusedContainerColor = Color(0xFFFAFAFA),
         )
     )
+
+    if(showError) {
+        Text(
+            text = "Correo inválido",
+            color = Color.Red,
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
 }
 
 @Composable
 fun HeaderImage(modifier: Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.ic_launcher_background),
+    Image(`
+        painter = painterResource(id = R.drawable.login),
         contentDescription = "Header",
-        modifier = modifier
+        modifier = modifier.width(200.dp).height(200.dp)
     )
 }

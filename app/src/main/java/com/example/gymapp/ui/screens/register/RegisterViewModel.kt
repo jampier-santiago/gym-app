@@ -119,6 +119,8 @@ class RegisterViewModel : ViewModel() {
             )
         )
 
+        Log.d("RegisterStatus", "Status actualizado: ${response}")
+
         if (response.isSuccess) {
             var c  = response.getOrNull()
             Log.d("LoginViewModel", "Login successful: $c")

@@ -38,6 +38,7 @@ import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 
 @Composable
 fun UserScreen(viewModel: UserViewModel, navController: NavHostController) {
@@ -122,12 +123,14 @@ fun UserView(modifier: Modifier, viewModel: UserViewModel, navController: NavHos
                                 modifier = Modifier.padding(16.dp),
                                 verticalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                Text(
-                                    text = ex.id.toString(),
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = Color.Black
+                                AsyncImage(
+                                    model = ex.image,
+                                    contentDescription = "Imagen del ejercicio",
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(150.dp),
                                 )
+
                                 Text(
                                     text = ex.name.toString(),
                                     fontSize = 16.sp,

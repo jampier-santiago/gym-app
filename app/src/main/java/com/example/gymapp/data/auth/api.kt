@@ -60,7 +60,7 @@ object RetrofitInstance {
     private val json = Json { ignoreUnknownKeys = true }
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.10.154:3000/api/")
+        .baseUrl("http://172.20.10.2:3000/api/")
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
 
